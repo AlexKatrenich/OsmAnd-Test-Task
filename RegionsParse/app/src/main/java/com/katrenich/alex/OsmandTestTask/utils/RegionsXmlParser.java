@@ -51,7 +51,6 @@ public class RegionsXmlParser {
     public static List<Region> parseRegions(XmlPullParser parser){
         mRegions = new ArrayList<>();
         parseRecursive(parser, null, 0);
-        Log.i(TAG, "parseRegions: " + mRegions);
         return mRegions;
     }
 
@@ -187,7 +186,6 @@ public class RegionsXmlParser {
                     }
 
                     case XmlPullParser.END_TAG : {
-//                        Log.i(TAG, "parseRegionsXML: END_TAG = " + parser.getName());
                         break;
                     }
 
@@ -215,17 +213,13 @@ public class RegionsXmlParser {
     // recursive get inner_download_suffix from parent region
     private static String getParentInnerDownloadSuffix(Region region) {
         Region parent = region.getParentRegion();
-        if (parent == null){
-            Log.i(TAG, "getParentInnerDownloadSuffix: Region: " + region);
-            return null;
-        }
+        if (parent == null) return null;
 
 
         String suffix = region.getParentRegion().getInnerDownLoadSuffix();
         if (suffix == null) {
             return getParentInnerDownloadSuffix(region.getParentRegion());
         } else {
-            Log.i(TAG, "getParentInnerDownloadSuffix: inner_download_suffix: " + suffix);
             return suffix;
         }
     }
